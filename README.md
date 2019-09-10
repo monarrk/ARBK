@@ -15,5 +15,9 @@ grub-mkrescue iso -o arbk.iso
 ## Testing with qemu
 
 ```
-qemu-system-i386 -kernel arbk
+qemu-system-i386 -kernel arbk.bin
+
+# OR
+
+qemu-system-i386 -cdrom arbk.iso
 ```
