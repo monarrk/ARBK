@@ -32,9 +32,9 @@ pub fn panic(msg: []const u8, error_return_trace: ?*builtin.StackTrace) noreturn
     while (true) {}
 }
 
-fn kmain() void {
+fn kmain() void { // kernel main
     terminal.initialize();
-    terminal.write("Running ARBK v0.0.1\n\nWelcome");
+    terminal.write("Running ARBK v0.0.1\n\nWelcome!\n");
 }
 
 // Hardware text mode color constants
@@ -94,14 +94,23 @@ const terminal = struct {
     }
 
     fn putChar(c: u8) void {
-        if (c == '\n') { // Add a newline if you read '\n'
-            row += 1;
-            column = usize(0);
-            return; 
+        switch (c) {
+            '\n' => {
+                row += 1;
+                column = usize(0);
+                return;
+            },
+
+            '\t' => {
+                column += 5;
+                return;
+            },
+
+            else => {
+                putCharAt(c, color, column, row);
+                column += 1;
+            },
         }
-        
-        putCharAt(c, color, column, row);
-        column += 1;
         
         if (column == VGA_WIDTH) {
             column = 0;
