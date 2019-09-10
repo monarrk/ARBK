@@ -34,7 +34,7 @@ pub fn panic(msg: []const u8, error_return_trace: ?*builtin.StackTrace) noreturn
 
 fn kmain() void { // kernel main
     terminal.initialize();
-    terminal.write("Running ARBK v0.0.1\n\nWelcome!\n");
+    terminal.write("Welcome!\n\nRunning ARBK v0.0.1\n");
 }
 
 // Hardware text mode color constants

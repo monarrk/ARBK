@@ -2,4 +2,5 @@ arbk.bin
 zig-cache
 arbk.bin.o
 arbk.iso
+build.log
 /iso
