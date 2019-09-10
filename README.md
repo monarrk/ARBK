@@ -3,6 +3,7 @@
 A Really Bad Kernel
 
 ## Building
+You can use ./build.sh to build, or you can do it manually using
 
 ```
 zig build-exe arbk.zig -target i386-freestanding --linker-script linker.ld --name arbk.bin
