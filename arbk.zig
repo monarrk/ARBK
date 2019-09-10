@@ -34,7 +34,7 @@ pub fn panic(msg: []const u8, error_return_trace: ?*builtin.StackTrace) noreturn
 
 fn kmain() void {
     terminal.initialize();
-    terminal.write("Hello, kernel World!");
+    terminal.write("Running ARBK v0.0.1\n\nWelcome");
 }
 
 // Hardware text mode color constants
@@ -94,8 +94,15 @@ const terminal = struct {
     }
 
     fn putChar(c: u8) void {
+        if (c == '\n') { // Add a newline if you read '\n'
+            row += 1;
+            column = usize(0);
+            return; 
+        }
+        
         putCharAt(c, color, column, row);
         column += 1;
+        
         if (column == VGA_WIDTH) {
             column = 0;
             row += 1;
