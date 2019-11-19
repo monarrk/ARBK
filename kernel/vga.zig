@@ -101,7 +101,7 @@ pub const terminal = struct {
             }
 
             // color escapes
-            if (c == '%' and data[i + 1] == '[') {
+            if (c == '%' and data[i + 1] == '[' and data.len > i + 2) {
                 const num = data[i + 2];
                 const col = switch (num) {
                     '0'...'9' => num - '0',

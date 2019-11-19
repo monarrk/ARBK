@@ -39,5 +39,5 @@ fn kmain() void {
     // Welcome with some fancy colors
     vga.terminal.initialize();
     vga.terminal.write("Welcome!\n");
-    vga.terminal.printf("Running%[1 ARBK%[7 v0.0.1");
+    vga.terminal.printf("Running%[1 ARBK%[7 v0.0.1 %[");
 }
