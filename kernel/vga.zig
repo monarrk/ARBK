@@ -89,4 +89,36 @@ pub const terminal = struct {
         for (data) |c|
             putChar(c);
     }
+
+    // print with formatting
+    pub fn printf(data: []const u8) void {
+        var skip: i32 = 0;
+        for (data) |c, i| {
+            // check if you need to skip
+            if (skip > 0) {
+                skip = skip - 1;
+                continue;
+            }
+
+            // color escapes
+            if (c == '%' and data[i + 1] == '[') {
+                const num = data[i + 2];
+                const col = switch (num) {
+                    '0'...'9' => num - '0',
+                    else => {
+                        write("BAD FORMATTING. THE FOLLOWING VALUE IS NOT A NUMBER: ");
+                        write([_]u8{num});
+                        return;
+                    },
+                };
+                
+                setColor(col);
+                // skip twice after this
+                skip = 2;
+                continue;
+            }
+
+            putChar(c);
+        }
+    }
 };

@@ -22,9 +22,9 @@ export var multiboot align(4) linksection(".multiboot") = MultiBoot{
 export var stack_bytes: [16 * 1024]u8 align(16) linksection(".bss") = undefined;
 const stack_bytes_slice = stack_bytes[0..];
 
-export nakedcc fn _start() noreturn {
+export nakedcc fn _start() void {
     @newStackCall(stack_bytes_slice, kmain);
-    while (true) {}
+    util.halt();
 }
 
 fn panic(msg: []const u8, error_return_trace: ?*builtin.StackTrace) void {
@@ -33,19 +33,11 @@ fn panic(msg: []const u8, error_return_trace: ?*builtin.StackTrace) void {
     vga.terminal.write(msg);
     util.halt();
 }
-
-//
 // MAIN
 //
-
 fn kmain() void {
     // Welcome with some fancy colors
     vga.terminal.initialize();
-    vga.terminal.write("Welcome!\n\nRunning ");
-    vga.terminal.setColor(vga.VGA_COLOR_BLUE);
-    vga.terminal.write("ARBK ");
-    vga.terminal.setColor(vga.VGA_COLOR_LIGHT_GREY);
-    vga.terminal.write("v0.0.1\n");
-
-    util.halt();
+    vga.terminal.write("Welcome!\n");
+    vga.terminal.printf("Running%[1 ARBK%[7 v0.0.1");
 }
