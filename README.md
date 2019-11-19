@@ -3,15 +3,10 @@
 A Really Bad Kernel
 
 ## Building
-You can use sys/do.sh to build, or you can do it manually using
 
-```
-zig build-exe arbk.zig -target i386-freestanding --linker-script linker.ld --name arbk.bin
-mkdir -p iso/boot/grub
-cp arbk.bin iso/boot/arbk.bin
-cp grub.cfg iso/boot/grub/grub.cfg
-grub-mkrescue iso -o arbk.iso
-```
+To build, you need grub, zig, and a UNIX system.
+
+You can use `sys/do.sh` to build. This will create a binary kernel file and a cdrom packaged with GRUB.
 
 ## Testing with qemu
 
