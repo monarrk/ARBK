@@ -6,7 +6,7 @@ A Really Bad Kernel
 
 To build, you need grub, zig, and a UNIX system.
 
-You can use `sys/do.sh` to build. This will create a binary kernel file and a cdrom packaged with GRUB.
+You can use `sys/x.sh` to build. This will create a binary kernel file and a cdrom packaged with GRUB.
 
 ## Testing with qemu
 

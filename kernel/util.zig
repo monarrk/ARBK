@@ -1,6 +1,8 @@
+// OS utilities
+
+// hang the system
 pub fn halt() void {
-    // use assembly to halt the cpu
     asm volatile (
-        \\hlt
+         \\hlt
     );
 }
