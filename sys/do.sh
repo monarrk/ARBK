@@ -4,6 +4,7 @@ case $1 in
 		exit 0
 		;;
 	"run-bin")
+		command -v qemu-system-x86_64 || printf "You need qemu\n"
 		qemu-system-x86_64 -kernel arbk.bin
 		exit 0
 		;;
@@ -14,7 +15,7 @@ case $1 in
 esac
 
 printf "Building..."
-zig build-exe src/arbk.zig -target i386-freestanding --linker-script sys/linker.ld --name ./arbk.bin || exit 1
+zig build-exe kernel/arbk.zig -target i386-freestanding --linker-script sys/linker.ld --name ./arbk.bin || exit 1
 printf "OK\n"
 
 printf "Checking for multiboot..."
@@ -23,6 +24,8 @@ printf "OK\n"
 
 printf "Setting up directory..."
 mkdir -p iso/boot/grub
+mkdir -p iso/usr/src
+cp -r kernel iso/usr/src/kernel
 cp arbk.bin iso/boot/arbk.bin
 cp sys/grub.cfg iso/boot/grub/grub.cfg
 printf "OK\n"
