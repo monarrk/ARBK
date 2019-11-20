@@ -1,16 +1,25 @@
+KEEP=NO
+
 case $1 in
+	# clean built files
 	"clean")
 		rm -rf iso *.o *.bin *.log *.iso
 		exit 0
 		;;
+	# run the binary file without grub
 	"run-bin")
 		command -v qemu-system-x86_64 || printf "You need qemu\n"
 		qemu-system-x86_64 -kernel arbk.bin
 		exit 0
 		;;
+	# run the CDROM with grub
 	"run")
 		qemu-system-x86_64 -cdrom arbk.iso
 		exit 0
+		;;
+	# keep files
+	"keep")
+		KEEP=YES
 		;;
 esac
 
@@ -30,8 +39,20 @@ cp arbk.bin iso/boot/arbk.bin
 cp sys/grub.cfg iso/boot/grub/grub.cfg
 printf "OK\n"
 
-printf "Making ISO (find a log in build.log)..."
+printf "Making ISO..."
 grub-mkrescue iso -o arbk.iso --verbose &> build.log || exit 1
 printf "OK\n"
 
-exit 0
+# remove useless files if "keep" is not passed
+case $KEEP in
+	"YES")
+		exit 0
+		;;
+	"NO")
+		printf "Removing trash files and logs (to keep, pass 'keep')..."
+		rm *.log *.o
+		printf "OK\n"
+		;;
+esac
+
+printf "Done! To use, run 'x.sh run' or 'x.sh run-bin'\n"
