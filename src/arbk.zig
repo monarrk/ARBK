@@ -13,6 +13,7 @@ const MEMINFO = 1 << 1;
 const MAGIC = 0x1BADB002;
 const FLAGS = ALIGN | MEMINFO;
 
+// multiboot header
 export var multiboot align(4) linksection(".multiboot") = MultiBoot{
     .magic = MAGIC,
     .flags = FLAGS,
@@ -22,6 +23,8 @@ export var multiboot align(4) linksection(".multiboot") = MultiBoot{
 export var stack_bytes: [16 * 1024]u8 align(16) linksection(".bss") = undefined;
 const stack_bytes_slice = stack_bytes[0..];
 
+// actual asm start section
+// call kmain and halt
 export nakedcc fn _start() void {
     @newStackCall(stack_bytes_slice, kmain);
     util.halt();

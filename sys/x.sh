@@ -32,12 +32,12 @@ grub-file --is-x86-multiboot arbk.bin || exit 1
 printf "OK\n"
 
 if [[ -d iso ]]; then
-	printf "Removing directory..."
+	printf "Removing old ROM directory..."
 	rm -rf iso
 	printf "OK\n"
 fi
 
-printf "Setting up directory..."
+printf "Setting up ROM directory..."
 mkdir -p iso/boot/grub
 mkdir -p iso/usr/src
 mkdir iso/usr/include
