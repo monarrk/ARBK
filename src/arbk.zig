@@ -1,6 +1,6 @@
 const builtin = @import("builtin");
-const vga = @import("./vga.zig");
-const util = @import("./util.zig");
+const vga = @import("lib/vga.zig");
+const util = @import("lib/util.zig");
 
 const MultiBoot = packed struct {
     magic: i32,
@@ -33,11 +33,14 @@ fn panic(msg: []const u8, error_return_trace: ?*builtin.StackTrace) void {
     vga.terminal.write(msg);
     util.halt();
 }
+
+//
 // MAIN
 //
 fn kmain() void {
     // Welcome with some fancy colors
     vga.terminal.initialize();
     vga.terminal.write("Welcome!\n");
-    vga.terminal.printf("Running%[1 ARBK%[7 v0.0.1");
+    // write with color escapes. See lib.vga.terminal
+    vga.terminal.writef("Booted%[1 ARBK%[7 v0.0.1");
 }

@@ -90,8 +90,9 @@ pub const terminal = struct {
             putChar(c);
     }
 
-    // print with formatting
-    pub fn printf(data: []const u8) void {
+    // print with color escapes
+    // automatically calls setColor()
+    pub fn writef(comptime data: []const u8) void {
         var skip: i32 = 0;
         for (data) |c, i| {
             // check if you need to skip
@@ -103,14 +104,7 @@ pub const terminal = struct {
             // color escapes
             if (c == '%' and data[i + 1] == '[' and data.len > i + 2) {
                 const num = data[i + 2];
-                const col = switch (num) {
-                    '0'...'9' => num - '0',
-                    else => {
-                        write("BAD FORMATTING. THE FOLLOWING VALUE IS NOT A NUMBER: ");
-                        write([_]u8{num});
-                        return;
-                    },
-                };
+                const col = num - '0'; // convert color to a number rather than a char
                 
                 setColor(col);
                 // skip twice after this

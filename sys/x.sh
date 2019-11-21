@@ -24,17 +24,24 @@ case $1 in
 esac
 
 printf "Building..."
-zig build-exe kernel/arbk.zig -target i386-freestanding --linker-script sys/linker.ld --name ./arbk.bin || exit 1
+zig build-exe src/arbk.zig -target i386-freestanding --linker-script sys/linker.ld --name ./arbk.bin || exit 1
 printf "OK\n"
 
 printf "Checking for multiboot..."
 grub-file --is-x86-multiboot arbk.bin || exit 1
 printf "OK\n"
 
+if [[ -d iso ]]; then
+	printf "Removing directory..."
+	rm -rf iso
+	printf "OK\n"
+fi
+
 printf "Setting up directory..."
 mkdir -p iso/boot/grub
 mkdir -p iso/usr/src
-cp -r kernel iso/usr/src/kernel
+mkdir iso/usr/include
+cp -r src iso/usr/src/kernel
 cp arbk.bin iso/boot/arbk.bin
 cp sys/grub.cfg iso/boot/grub/grub.cfg
 printf "OK\n"
