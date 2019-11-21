@@ -17,3 +17,21 @@ qemu-system-i386 -kernel arbk.bin
 
 qemu-system-i386 -cdrom arbk.iso
 ```
+
+## Directory setup
+```
+/
+--README.md	README, duh
+
+--sys/
+----x.sh	utilities like build, clean, and run
+----linker.ld	linker script
+----grub.cfg	grub config file put in iso/boot/grub/grub.cfg
+
+--src/
+----arbk.zig	the main kernel file
+----lib/
+------stdio.zig	nothing, yet
+------vga.zig	vga functions and constants
+------util.zig	OS utility functions
+```
